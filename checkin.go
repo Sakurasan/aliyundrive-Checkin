@@ -8,6 +8,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"net/url"
 	"os"
 	"strings"
 	"time"
@@ -149,12 +150,17 @@ func (a aliyundrive) signIn() error {
 }
 
 func pushplus(content string) {
-	pushplus_url := fmt.Sprintf("http://www.pushplus.plus/send?token=%s&title=阿里云盘签到&content=%s&template=markdown", pushplus_token, content)
-	_, err := http.Get(pushplus_url)
+	v := url.Values{}
+	v.Add("token", "b1ef07e55c5547f9b2dac1250df08400")
+	v.Add("title", "阿里云盘签到")
+	v.Add("content", content)
+	pushplus_url := "http://www.pushplus.plus/send?" + v.Encode()
+	req, _ := http.NewRequest("GET", pushplus_url, nil)
+	req.Header.Set("Content-Type", "application/json")
+	_, err := http.DefaultClient.Do(req)
 	if err != nil {
 		log.Printf("发送通知失败,%s", err.Error())
 	}
-
 }
 
 func main() {
