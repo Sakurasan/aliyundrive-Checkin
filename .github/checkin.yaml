@@ -1,0 +1,29 @@
+name: "SMZDM Checkin"
+
+on:
+  push:
+    # branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  schedule:
+    - cron: '0 23 * * *'
+  watch:
+    types: [started]
+
+jobs:
+  checks:
+    name: run
+    runs-on: ubuntu-latest
+    steps:
+    - 
+      uses: actions/checkout@master
+    - 
+      name: Go ENV
+      uses: cedrickring/golang-action/go1.19@1.6.0
+    - 
+      name: Checkin
+      env:
+        GO111MODULE: "on"
+        REFRESH_TOKENS: ${{ secrets.REFRESH_TOKENS }}
+        PUSHPLUS_TOKEN: ${{ secrets.PUSHPLUS_TOKEN }}
+      run: go mod tidy && go build -o checkin checkin.go && ./checkin
