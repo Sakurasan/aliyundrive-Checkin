@@ -15,11 +15,10 @@ jobs:
     name: run
     runs-on: ubuntu-latest
     steps:
-    - 
-      uses: actions/checkout@master
-    - 
-      name: Go ENV
-      uses: cedrickring/golang-action/go1.19@1.6.0
+    - uses: actions/checkout@v3
+    - uses: actions/setup-go@v3
+      with:
+        go-version: '1.19' # The Go version to download (if necessary) and use.
     - 
       name: Checkin
       env:
