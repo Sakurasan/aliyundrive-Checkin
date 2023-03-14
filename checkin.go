@@ -151,7 +151,7 @@ func (a aliyundrive) signIn() error {
 
 func pushplus(content string) {
 	v := url.Values{}
-	v.Add("token", "b1ef07e55c5547f9b2dac1250df08400")
+	v.Add("token", pushplus_token)
 	v.Add("title", "阿里云盘签到")
 	v.Add("content", content)
 	pushplus_url := "http://www.pushplus.plus/send?" + v.Encode()
