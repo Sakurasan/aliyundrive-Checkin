@@ -46,7 +46,7 @@ func (a *aliyundrive) getAccessToken() {
 	bytersp, _ := io.ReadAll(rsp.Body)
 	a.accessToken = gjson.GetBytes(bytersp, "access_token").String()
 	a.refreshToken = gjson.GetBytes(bytersp, "refresh_token").String()
-	log.Printf("%#v\n", string(bytersp))
+	// log.Printf("%#v\n", string(bytersp))
 }
 
 type refreshToken struct {
