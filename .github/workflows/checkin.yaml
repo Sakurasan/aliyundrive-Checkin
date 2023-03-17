@@ -1,4 +1,4 @@
-name: "SMZDM Checkin"
+name: "AliyunDrive Checkin"
 
 on:
   push:
