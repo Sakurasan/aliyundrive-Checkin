@@ -14,7 +14,7 @@
 1.获取 refresh_token
 [https://www.aliyundrive.com/drive](https://www.aliyundrive.com/drive)
 
-console->JSON.parse(localStorage.token).refresh_token
+console.log(JSON.parse(localStorage.token).refresh_token)
 
 2.PUSHPLUS_TOKEN
 [https://www.pushplus.plus/](https://www.pushplus.plus/)
