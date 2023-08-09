@@ -9,7 +9,6 @@ on:
     - cron: '0 23 * * *'
   watch:
     types: [started]
-  workflow_dispatch:
 
 jobs:
   checks:
