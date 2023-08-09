@@ -163,6 +163,34 @@ func pushplus(content string) {
 	}
 }
 
+func dingding(result string){
+	// 构造要发送的消息
+	message := struct {
+		MsgType string `json:"msgtype"`
+		Text struct {
+			Content string `json:"content"`
+		} `json:"text"`
+	}{
+		MsgType: "text",
+		Text: struct {
+			Content string `json:"content"`
+		}{
+			Content: "HiFiNi" + result,
+		},
+	}
+
+	// 将消息转换为JSON格式
+	messageJson, _ := json.Marshal(message)
+	DINGDING_WEBHOOK := os.Getenv("DINGDING_WEBHOOK")
+	// 发送HTTP POST请求
+	resp, err := http.Post(DINGDING_WEBHOOK,
+		"application/json", bytes.NewBuffer(messageJson))
+	if err != nil {
+		panic(err)
+	}
+	defer resp.Body.Close()
+}
+
 func main() {
 	rt := os.Getenv("REFRESH_TOKENS")
 	if rt == "" {
@@ -170,17 +198,18 @@ func main() {
 	} else {
 		refresh_Token = rt
 	}
-	pptoken := os.Getenv("PUSHPLUS_TOKEN")
-	if pptoken == "" {
-		panic("未配置PUSHPLUS_TOKEN")
-	} else {
-		pushplus_token = pptoken
-	}
+	// pptoken := os.Getenv("PUSHPLUS_TOKEN")
+	// if pptoken == "" {
+	// 	panic("未配置PUSHPLUS_TOKEN")
+	// } else {
+	// 	pushplus_token = pptoken
+	// }
 
 	a := New(refresh_Token)
 	a.getAccessToken()
 	err := a.signIn()
 	if err != nil {
-		pushplus(err.Error())
+		// pushplus(err.Error())
+		dingding(err.Error())
 	}
 }
